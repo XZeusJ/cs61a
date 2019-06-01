@@ -1,0 +1,18 @@
+Your course grade is computed using a point system with a total of 300 points.
+
+exams
+-Midterm 1, worth 30 points.
+-Midterm 2, worth 60 points.
+-The final exam, worth 75 points.
+
+
+
+assignments
+-labs
+-homework
+-projects
+Four projects, worth 100 points.
+Homework, worth 25 points.
+Section participation, worth 10 points.
+
+
