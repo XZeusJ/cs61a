@@ -272,7 +272,7 @@ def make_averaged(fn, num_samples=1000):
     def average_value(*args):
         count = 0
         total = 0
-        while count < 1000:
+        while count < num_samples:
             total += fn(*args)
             count += 1
         result = total / count
@@ -363,13 +363,14 @@ def swap_strategy(score, opponent_score, margin=8, num_rolls=4):
     non-beneficial swap. Otherwise, it rolls NUM_ROLLS.
     """
     # BEGIN PROBLEM 11
-    if score < opponent_score and is_swap(score,opponent_score):
+    new_score = score + free_bacon(opponent_score)
+    if is_swap(new_score, opponent_score) and new_score < opponent_score:
         return 0
-    if opponent_score - score >= margin and opponent_score >= score and is_swap(score, opponent_score):
-        return 0
-    return num_rolls
+    elif is_swap(new_score, opponent_score) and new_score > opponent_score:
+        return num_rolls
+    else:
+        return bacon_strategy(score, opponent_score, margin, num_rolls)
     # END PROBLEM 11
-
 
 def final_strategy(score, opponent_score):
     """Write a brief description of your final strategy.
@@ -377,7 +378,7 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 12
-    return 4  # Replace this statement
+    return swap_strategy(score, opponent_score, 5,5)
     # END PROBLEM 12
 
 
