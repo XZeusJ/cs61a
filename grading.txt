@@ -16,3 +16,97 @@ Homework, worth 25 points.
 Section participation, worth 10 points.
 
 
+
+
+--------------------------------------------------------------------- 
+Question 7 > Suite 1 > Case 1                                         
+(cases remaining: 5)                                                  
+                                                                      
+Q: What does announce_highest return?                                 
+Choose the number of the correct choice:                              
+0) A commentary function that prints information about the            
+   biggest point increase for the current player.                     
+1) A string containing the largest point increase for the             
+   current player.                                                    
+2) The current largest point increase between both                    
+   players.                                                           
+? 1                                                                   
+-- Not quite. Try again! --                                           
+                                                                      
+Choose the number of the correct choice:                              
+0) A commentary function that prints information about the            
+   biggest point increase for the current player.                     
+1) A string containing the largest point increase for the             
+   current player.                                                    
+2) The current largest point increase between both                    
+   players.                                                           
+? 0                                                                   
+-- OK! --                                                             
+                                                                      
+--------------------------------------------------------------------- 
+Question 7 > Suite 1 > Case 2                                         
+(cases remaining: 4)                                                  
+                                                                      
+Q: When does the commentary function returned by announce_highest     
+print something out?                                                  
+Choose the number of the correct choice:                              
+0) When the current player, given by the parameter `who`,             
+   earns the biggest point increase yet between both                  
+   players in the game.                                               
+1) After each turn.                                                   
+2) When the current player, given by the parameter `who`,             
+   earns their biggest point increase yet in the game.                
+? 1                                                                   
+-- Not quite. Try again! --                                           
+                                                                      
+Choose the number of the correct choice:                              
+0) When the current player, given by the parameter `who`,             
+   earns the biggest point increase yet between both                  
+   players in the game.                                               
+1) After each turn.                                                   
+2) When the current player, given by the parameter `who`,             
+   earns their biggest point increase yet in the game.                
+? 2                                                                   
+-- OK! --                                                             
+                                                                      
+--------------------------------------------------------------------- 
+Question 7 > Suite 1 > Case 3                                         
+(cases remaining: 3)                                                  
+                                                                      
+Q: What does the parameter previous_score represent?                  
+Choose the number of the correct choice:                              
+0) The previous highest gain for the current player.                  
+1) The opponent's score before this turn.                             
+2) The current player's score before this turn.                       
+? 0                                                                   
+-- Not quite. Try again! --                                           
+                                                                      
+Choose the number of the correct choice:                              
+0) The previous highest gain for the current player.                  
+1) The opponent's score before this turn.                             
+2) The current player's score before this turn.                       
+? 2                                                                
+-- OK! --                                                             
+                                                                      
+--------------------------------------------------------------------- 
+Question 7 > Suite 2 > Case 1                                         
+(cases remaining: 2)                                                  
+                                                                      
+-- Already unlocked --                                                
+                                                                      
+--------------------------------------------------------------------- 
+Question 7 > Suite 2 > Case 2                                         
+(cases remaining: 1)                                                  
+                                                                      
+-- Already unlocked --                                                
+                                                                      
+--------------------------------------------------------------------- 
+OK! All cases for Question 7 unlocked.                                
+                                                                      
+Backup... 100% complete                                               
+Backup successful for user: zhangjin.xiao94@gmail.com                 
+                                                                      
+Checking for software updates...                                      
+OK is up to date                                                      
+                                                                      
+
