@@ -107,9 +107,6 @@ def pingpong(n):
 
     return helper(1, 1, 1)
 
-print(pingpong(7))
-print(pingpong(8))
-
 def accumulate(combiner, base, n, term):
     """Return the result of combining the first n terms in a sequence and base.
     The terms to be combined are term(1), term(2), ..., term(n).  combiner is a
@@ -156,7 +153,13 @@ def filtered_accumulate(combiner, base, pred, n, term):
     """
     def combine_if(x, y):
         "*** YOUR CODE HERE ***"
+        if pred(y):
+            return combiner(x,y)
+        else:
+            return x
     return accumulate(combine_if, base, n, term)
+
+
 
 def odd(x):
     return x % 2 == 1
