@@ -80,6 +80,7 @@ def pingpong(n):
     # if n % 7 == 0 or has_seven(n):
     #     return None
 
+    """ iteration version
     count = 1
     result = 1
     isInc = True
@@ -92,12 +93,22 @@ def pingpong(n):
             result -= 1
         count += 1
     return result
+    """
 
-print(pingpong(30))
-print(pingpong(71))
-print(pingpong(72))
-print(pingpong(100))
 
+    def helper(count, result, step):
+        if count == n:
+            return result
+
+        if count % 7 == 0 or has_seven(count):
+            return helper(count+1, result-step, -step)
+        else:
+            return helper(count+1, result+step, step)
+
+    return helper(1, 1, 1)
+
+print(pingpong(7))
+print(pingpong(8))
 
 def accumulate(combiner, base, n, term):
     """Return the result of combining the first n terms in a sequence and base.
