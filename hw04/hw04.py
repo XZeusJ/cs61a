@@ -41,6 +41,12 @@ def squares(s):
     []
     """
     "*** YOUR CODE HERE ***"
+    def isSquare(x):
+        for i in range(0,x+1):
+            if i**2 == x:
+                return i
+        return False 
+    return [int(x**(1/2)) for x in s if isSquare(x)]
 
 def g(n):
     """Return the value of G(n), computed recursively.
@@ -60,6 +66,9 @@ def g(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n <= 3: return n
+    return g(n-1) + 2*g(n-2) +3*g(n-3)
+
 
 def g_iter(n):
     """Return the value of G(n), computed iteratively.
@@ -79,6 +88,7 @@ def g_iter(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    return g(n)
 
 def count_change(amount):
     """Return the number of ways to make change for amount.
@@ -96,6 +106,20 @@ def count_change(amount):
     True
     """
     "*** YOUR CODE HERE ***"
+    coin_list = []
+    coin = 1
+    while coin <= amount:
+        coin_list.append(coin)
+        coin *= 2
+
+    count = 0
+    def count_partitions(coin_list, amount):
+
+
+        return count + max_num_count(coin_list[:-1], amount-coin_list[-1])
+
+
+# print(count_change(127))    
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
@@ -146,4 +170,9 @@ def make_anonymous_factorial():
     >>> check(HW_SOURCE_FILE, 'make_anonymous_factorial', ['Assign', 'AugAssign', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
+    # def f(n):
+    #     if n == 1: return 1
+    #     return mul(n, f(sub(n,1)))
+    return (lambda a: lambda v: a(a,v))(lambda s,x:1 if x==0 else mul(x,s(s,sub(x,1))))
+
+print(make_anonymous_factorial()(5))
