@@ -106,17 +106,31 @@ def count_change(amount):
     True
     """
     "*** YOUR CODE HERE ***"
-    coin_list = []
-    coin = 1
-    while coin <= amount:
-        coin_list.append(coin)
-        coin *= 2
+    # coin_list = []
+    # coin = 1
+    # while coin <= amount:
+    #     coin_list.append(coin)
+    #     coin *= 2
 
-    count = 0
-    def count_partitions(coin_list, amount):
+    # count = 0
+    # def count_partitions(coin_list, amount):
 
 
-        return count + max_num_count(coin_list[:-1], amount-coin_list[-1])
+    #     return count + max_num_count(coin_list[:-1], amount-coin_list[-1])
+
+    import math
+    def count_helper(amount, change_pow):
+        if amount == 0:
+            return 1
+        if amount < 0:
+            return 0
+        elif change_pow < 0:
+            return 0
+        else:
+            return count_helper(amount, change_pow - 1) + \
+            count_helper(amount - 2**change_pow, change_pow)
+    return count_helper(amount, int(math.log2(amount)))
+
 
 
 # print(count_change(127))    
