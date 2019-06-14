@@ -106,17 +106,30 @@ def cycle(f1, f2, f3):
     """
     "*** YOUR CODE HERE ***"
     def fn(n):
+        # fn_iter is higher-order function for such process
+        # if n == 0: return lambda x: x
+        # if n == 1: return f1(x)
+        # if n == 2: .....
         def fn_iter(x):
             if n == 0:
-                return x
+            	return x
             else:
-                l = [f1, f2, f3] *n
-                for i in range(n):
-                    if i == 0:
-                        x = l[i](x)
-                    else:
-                        x = l[i](x)
-            return x
+            	l = [f1,f2,f3]*n
+            	for i in range(n):
+            		x = l[i](x)
+            return x    		
         return fn_iter
     return fn
 
+def add1(x):
+    return x + 1
+def times2(x):
+    return x * 2
+def add3(x):
+    return x + 3
+my_cycle = cycle(add1, times2, add3)
+identity = my_cycle(0)
+print(identity(5))
+print()
+do_two_cycles = my_cycle(6)
+print(do_two_cycles(1))
