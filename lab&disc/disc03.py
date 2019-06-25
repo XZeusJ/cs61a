@@ -64,7 +64,6 @@ def count_stair_ways(n):
 def count_k(n, k):
 	if n <= k:
 		return 2**(n-1)
-
 	else:
 		total = 0
 		for i in range(1, k+1):
