@@ -70,10 +70,10 @@ def count_k(n, k):
 			total += count_k(n-i,k)
 		return total
 
-# print(count_k(3,3))
-# print(count_k(4,4))
-# print(count_k(5,3))
-# print(count_k(300,1))
+print(count_k(3,3))
+print(count_k(4,4))
+print(count_k(5,3))
+print(count_k(300,1))
 
 #2.3
 def pascal(row, column):
