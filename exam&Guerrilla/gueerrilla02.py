@@ -115,19 +115,18 @@ def mario_number(level):
     on.
     """
     # print("level is:", level)
-    if level % 1000 == 111:
-        return mario_number(level // 100) + 2
-    elif level % 1000 == 101:
-        return mario_number(level // 100)
-    else:
+    if level == 1:
+        return 1
+    elif level % 10 == 0:
         return 0
+    else:
+        return mario_number(level // 10) + mario_number(level // 100)
 
 
-# print(mario_number(10101))  # Hops each turn: (1, 2, 2)
-# print(mario_number(11101))  # Hops each turn: (1, 1, 1, 2), (2, 1, 2)
-# print(mario_number(100101))  # No way to traverse through level
-# print(mario_number(101101)) # should be 1
-
+print(mario_number(10101))  # Hops each turn: (1, 2, 2)
+print(mario_number(11101))  # Hops each turn: (1, 1, 1, 2), (2, 1, 2)
+print(mario_number(100101))  # No way to traverse through level
+print(mario_number(101101))  # should be 1
 
 # EXTRA Challenge: Question 3
 # Implement the combine function, which takes a non-negative integer n, a two-argument function
