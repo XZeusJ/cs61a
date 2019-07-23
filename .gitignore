@@ -2,3 +2,4 @@
 construct_check.py
 *.pyc
 .idea
+*tests*

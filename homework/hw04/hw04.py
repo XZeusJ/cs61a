@@ -105,12 +105,27 @@ def g_iter(n):
         return n
     i = 4
     while i <= n:
-        g4 = g3+2*g2+3*g1
+        g4 = g3 + 2 * g2 + 3 * g1
         g1 = g2
         g2 = g3
         g3 = g4
         i += 1
     return g4
+
+
+def count_partition(n, m, s=""):
+    if n == 0:
+        print(s[1:])
+        return 1
+    elif n < 0:
+        return 0
+    elif m == 0:
+        return 0
+    else:
+        return count_partition(n - m, m, str(s) + "+" + str(m)) + count_partition(n, m - 1, str(s))
+
+
+# count_partition(5, 5)
 
 
 def count_change(amount):
@@ -129,16 +144,6 @@ def count_change(amount):
     True
     """
     "*** YOUR CODE HERE ***"
-    # coin_list = []
-    # coin = 1
-    # while coin <= amount:
-    #     coin_list.append(coin)
-    #     coin *= 2
-
-    # count = 0
-    # def count_partitions(coin_list, amount):
-
-    #     return count + max_num_count(coin_list[:-1], amount-coin_list[-1])
 
     import math
 
@@ -192,7 +197,16 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
+    aux = 6 - start - end
+    if n == 1:
+        print_move(start, end)
+    else:
+        move_stack(n - 1, start, aux)
+        move_stack(1, start, end)
+        move_stack(n - 1, aux, end)
 
+
+move_stack(3, 1, 3)
 
 ###################
 # Extra Questions #
@@ -215,5 +229,4 @@ def make_anonymous_factorial():
     #     return mul(n, f(sub(n,1)))
     return (lambda a: lambda v: a(a, v))(lambda s, x: 1 if x == 0 else mul(x, s(s, sub(x, 1))))
 
-
-print(make_anonymous_factorial()(5))
+# print(make_anonymous_factorial()(5))
