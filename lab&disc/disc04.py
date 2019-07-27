@@ -117,12 +117,12 @@ def hailstone_tree(n, h):
     return tree(n, branches)
 
 
-t = tree(1, [tree(3, [tree(4), tree(5), tree(6)]), tree(2)])
-print(t)
-# print(tree_max_rec1(t))
-print("max label is ", tree_max_rec2(t))
-print("height is ", height(t))
-print("square tree is ", square_tree(t))
+# t = tree(1, [tree(3, [tree(4), tree(5), tree(6)]), tree(2)])
+# print(t)
+# # print(tree_max_rec1(t))
+# print("max label is ", tree_max_rec2(t))
+# print("height is ", height(t))
+# print("square tree is ", square_tree(t))
 
 t = tree(2, [tree(7, [tree(3), tree(6, [tree(5), tree(11)])]), tree(15)])
 print(t)
@@ -132,9 +132,9 @@ print(find_path(t, 6))
 print(find_path(t, 10))  # returns None
 print(prune(t, 2))
 
-print(hailstone_tree(1, 0))
-[1]
-print(hailstone_tree(1, 4))
-[1, [2, [4, [8, [16]]]]]
-print(hailstone_tree(8, 3))
-[8, [16, [32, [64]], [5, [10]]]]
+# print(hailstone_tree(1, 0))
+# [1]
+# print(hailstone_tree(1, 4))
+# [1, [2, [4, [8, [16]]]]]
+# print(hailstone_tree(8, 3))
+# [8, [16, [32, [64]], [5, [10]]]]
