@@ -24,18 +24,18 @@ def is_leaf(tree):
 # Return of the Digits
 def complete(t, d, k):
     """Return whether t is d-k-complete."""
-    if not branches(t): # we check the relationship about tree deep and height
+    if not branches(t):  # we check the relationship about tree deep and height
         return d == 0
 
     bs = [complete(branch, d - 1, k) for branch in branches(t)]
-    # print(bs)
+    print(bs, d)
     return len(branches(t)) == k and all(bs)
 
 
 # print(complete(tree(1), 0, 5))
 u = tree(1, [tree(1), tree(1), tree(1)])
-# print(u)
-print([complete(u, 1, 3), complete(u, 1, 2), complete(u, 2, 3)])
+print(u)
+# print([complete(u, 1, 3), complete(u, 1, 2), complete(u, 2, 3)])
 print(complete(tree(1, [u, u, u]), 2, 3))
 
 # 1.Translating a List Diagram to Code
@@ -93,12 +93,11 @@ def is_path(t, path):
 
     return any(is_path(branch, path[1:]) for branch in branches(t))
 
-
-t = tree(1, [
-    tree(2, [tree(4), tree(5,[tree(8)])]),
-    tree(3, [tree(6), tree(7)])
-])
-print(t)
-print(is_path(t, [1, 2]))
-print(is_path(t, [1, 2, 5, 8]))
-print(is_path(t, [2, 4]))
+# t = tree(1, [
+#     tree(2, [tree(4), tree(5,[tree(8)])]),
+#     tree(3, [tree(6), tree(7)])
+# ])
+# print(t)
+# print(is_path(t, [1, 2]))
+# print(is_path(t, [1, 2, 5, 8]))
+# print(is_path(t, [2, 4]))

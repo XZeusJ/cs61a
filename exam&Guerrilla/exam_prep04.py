@@ -138,7 +138,25 @@ def filter(iterable, fn):
 
 # sprint 2018, exam prep 4, #4
 def ensure_consistency(fn):
-    pass
+    n = 0
+    z = {}
+
+    def helper(x):
+        nonlocal n
+        nonlocal z
+        n += 1
+        if n >= 20:
+            return None
+        val = fn(x)
+        if x not in z:
+            z[x] = [val]
+        if val in z[x]:
+            return val
+        else:
+            z[x].append(val)
+            return None
+
+    return helper
 
 
 def consistent(x):
@@ -154,3 +172,10 @@ def inconsistent(x):
 
 a = ensure_consistency(consistent)
 print(a(5))
+print(a(5))
+print(a(6))
+print(a(6))
+b = ensure_consistency(inconsistent)
+print(b(5))
+print(b(5))
+print(b(6))

@@ -13,8 +13,7 @@ rev = reverse(lst)
 def combine_skipper(f, lst):
     n = 0
     while n < len(lst) // 4:
-        lst[n * 4] = lst[n * 4] + lst[n * 4 + 1]
-        lst[n * 4 + 1] = n * 4 + 1
+        lst[n * 4:n * 4 + 2] = [f(lst[n * 4:n * 4 + 2])] + [n * 4 + 1]
         n += 1
     return lst
 
@@ -129,5 +128,58 @@ def branches(tree):
 def is_leaf(tree):
     return not branches(tree)
 
+
+# def is_min_heap(t):
+#     sub_t = [is_min_heap(branch) for branch in branches(t)]
+#     # print(sub_t)
+#     return all([label(t) < label(branch) for branch in branches(t)]) and all(sub_t)
+
 def is_min_heap(t):
-    pass
+    for branch in branches(t):
+        if label(t) > label(branch) or not is_min_heap(branch):
+            return False
+    return True
+
+
+t = tree(1, [tree(5, [tree(7)]), tree(3, [tree(9), tree(4)]), tree(6)])
+
+# print(t)
+# print(is_min_heap(t))
+from functools import reduce
+
+
+def largest_product_path(tree):
+    if not tree:
+        return 0
+    if is_leaf(tree):
+        return label(tree)
+    else:
+        paths = [largest_product_path(branch) for branch in branches(tree)]
+        return max(paths) * label(tree)
+
+
+# print(largest_product_path(None))
+# print(largest_product_path(tree(3)))
+# t = tree(3, [tree(7, [tree(2)]), tree(8, [tree(1)]), tree(4)])
+# print(t)
+# print(largest_product_path(t))
+
+# Chanllenge Question
+def level_order(tree):
+    if not tree:
+        return []
+    current_level, next_level = [label(tree)], [tree]
+    print(next_level)
+    while next_level:
+        find_next = []
+        for b in next_level:
+            find_next.extend(branches(b))
+        print(find_next)
+        next_level = find_next
+        current_level.extend([label(t) for t in next_level])
+    return current_level
+
+
+t = tree(3, [tree(7, [tree(2)]), tree(8, [tree(1)]), tree(4)])
+print(t)
+print(level_order(t))
