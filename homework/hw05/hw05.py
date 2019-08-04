@@ -366,6 +366,7 @@ def make_fib():
     "*** YOUR CODE HERE ***"
     n = 0
     m = 1
+
     def fib():
         nonlocal n
         nonlocal m
@@ -376,6 +377,7 @@ def make_fib():
 
     return fib
 
+
 # fib = make_fib()
 # print(fib())
 # print(fib())
@@ -385,7 +387,6 @@ def make_fib():
 # fib2 = make_fib()
 # print(fib() + sum([fib2() for _ in range(5)]))
 #
-
 
 
 def make_withdraw(balance, password):
@@ -417,7 +418,26 @@ def make_withdraw(balance, password):
     True
     """
     "*** YOUR CODE HERE ***"
+    pwd = []
+    wrong = 0
 
+    def withdraw(amount, input_pwd):
+        nonlocal balance
+        nonlocal pwd
+        nonlocal wrong
+        if wrong >= 3:
+            return "Your account is locked. Attempts: " + str(pwd)
+        elif input_pwd != password:
+            pwd.append(input_pwd)
+            wrong += 1
+            return "Incorrect password"
+        if amount > balance:
+            return 'Insufficient funds'
+        else:
+            balance = balance - amount
+            return balance
+
+    return withdraw
 
 
 def make_joint(withdraw, old_password, new_password):
@@ -459,6 +479,46 @@ def make_joint(withdraw, old_password, new_password):
     "Your account is locked. Attempts: ['my', 'secret', 'password']"
     """
     "*** YOUR CODE HERE ***"
+
+    if withdraw(0, old_password) == 'Incorrect password':
+        return 'Incorrect password'
+
+    # if withdraw(0, old_password) != 'Insufficient funds' or type(withdraw(0, old_password) != int):
+    #     return withdraw(0, old_password)
+
+
+    # else:
+    #     w = make_withdraw(withdraw(0, old_password), new_password)
+
+    def joint(balance, password):
+        if password == old_password or password == new_password:
+            return withdraw(balance, old_password)
+        else:
+            return withdraw(balance, password)
+
+    return joint
+
+
+w = make_withdraw(100, 'hax0r')
+print(w(25, 'hax0r'))
+print(make_joint(w, 'my', 'secret'))
+j = make_joint(w, 'hax0r', 'secret')
+print(w(25, 'secret'))
+print(j(25, 'secret'))
+print(j(25, 'hax0r'))
+print(j(100, 'secret'))
+
+j2 = make_joint(j, 'secret', 'code')
+print(j2(5, 'code'))
+print(j2(5, 'secret'))
+print(j2(5, 'hax0r'))
+
+print(j2(25, 'password'))
+print(j2(5, 'secret'))
+print(j(5, 'secret'))
+print(w(5, 'hax0r'))
+print(make_joint(w, 'hax0r', 'hello'))
+
 
 
 # Generators
