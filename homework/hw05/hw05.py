@@ -418,24 +418,20 @@ def make_withdraw(balance, password):
     True
     """
     "*** YOUR CODE HERE ***"
-    pwd = []
-    wrong = 0
+    attempts = []
 
     def withdraw(amount, input_pwd):
         nonlocal balance
-        nonlocal pwd
-        nonlocal wrong
-        if wrong >= 3:
-            return "Your account is locked. Attempts: " + str(pwd)
-        elif input_pwd != password:
-            pwd.append(input_pwd)
-            wrong += 1
+        nonlocal attempts
+        if len(attempts) == 3:
+            return "Your account is locked. Attempts: %s" % attempts
+        if input_pwd != password:
+            attempts.append(input_pwd)
             return "Incorrect password"
         if amount > balance:
             return 'Insufficient funds'
-        else:
-            balance = balance - amount
-            return balance
+        balance = balance - amount
+        return balance
 
     return withdraw
 
@@ -479,16 +475,10 @@ def make_joint(withdraw, old_password, new_password):
     "Your account is locked. Attempts: ['my', 'secret', 'password']"
     """
     "*** YOUR CODE HERE ***"
-
-    if withdraw(0, old_password) == 'Incorrect password':
-        return 'Incorrect password'
-
-    # if withdraw(0, old_password) != 'Insufficient funds' or type(withdraw(0, old_password) != int):
-    #     return withdraw(0, old_password)
-
-
-    # else:
-    #     w = make_withdraw(withdraw(0, old_password), new_password)
+    test = withdraw(0, old_password)
+    if type(test) == str:
+        # return withdraw(0, old_password) // ??
+        return test
 
     def joint(balance, password):
         if password == old_password or password == new_password:
@@ -499,26 +489,25 @@ def make_joint(withdraw, old_password, new_password):
     return joint
 
 
-w = make_withdraw(100, 'hax0r')
-print(w(25, 'hax0r'))
-print(make_joint(w, 'my', 'secret'))
-j = make_joint(w, 'hax0r', 'secret')
-print(w(25, 'secret'))
-print(j(25, 'secret'))
-print(j(25, 'hax0r'))
-print(j(100, 'secret'))
-
-j2 = make_joint(j, 'secret', 'code')
-print(j2(5, 'code'))
-print(j2(5, 'secret'))
-print(j2(5, 'hax0r'))
-
-print(j2(25, 'password'))
-print(j2(5, 'secret'))
-print(j(5, 'secret'))
-print(w(5, 'hax0r'))
-print(make_joint(w, 'hax0r', 'hello'))
-
+# w = make_withdraw(100, 'hax0r')
+# print(w(25, 'hax0r'))
+# print(make_joint(w, 'my', 'secret'))
+# j = make_joint(w, 'hax0r', 'secret')
+# print(w(25, 'secret'))
+# print(j(25, 'secret'))
+# print(j(25, 'hax0r'))
+# print(j(100, 'secret'))
+#
+# j2 = make_joint(j, 'secret', 'code')
+# print(j2(5, 'code'))
+# print(j2(5, 'secret'))
+# print(j2(5, 'hax0r'))
+#
+# print(j2(25, 'password'))
+# print(j2(5, 'secret'))
+# print(j(5, 'secret'))
+# print(w(5, 'hax0r'))
+# print(make_joint(w, 'hax0r', 'hello'))
 
 
 # Generators
@@ -558,6 +547,19 @@ def generate_paths(t, x):
     [[0, 2], [0, 2, 1, 2]]
     """
     "*** YOUR CODE HERE ***"
+    # print("t",t)
+    if label(t) == x:
+        yield [x]
+    for branch in branches(t):
+        for path in generate_paths(branch, x):
+            # print("path",path)
+            yield [label(t)] + path
+
+
+# t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
+# print_tree(t1)
+# print(next(generate_paths(t1, 5)))
+# print(next(generate_paths(t1, 5)))
 
 
 ###################
