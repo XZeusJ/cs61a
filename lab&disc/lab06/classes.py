@@ -2,6 +2,7 @@
 
 import random
 
+
 class Card(object):
     cardtype = 'Staff'
 
@@ -23,6 +24,9 @@ class Card(object):
         500
         """
         "*** YOUR CODE HERE ***"
+        self.name = name
+        self.attack = attack
+        self.defense = defense
 
     def power(self, other_card):
         """
@@ -42,7 +46,7 @@ class Card(object):
         50.0
         """
         "*** YOUR CODE HERE ***"
-
+        return (self.attack) - (other_card.defense) / 2
 
     def effect(self, other_card, player, opponent):
         """
@@ -63,6 +67,7 @@ class Card(object):
         Returns a copy of this card.
         """
         return Card(self.name, self.attack, self.defense)
+
 
 class Player(object):
     def __init__(self, deck, name):
@@ -111,14 +116,13 @@ class Player(object):
         """
         "*** YOUR CODE HERE ***"
 
-
     def display_hand(self):
         """
         Display the player's current hand to the user.
         """
         print('Your hand:')
-        for card_index, displayed_card in zip(range(len(self.hand)),[str(card) for card in self.hand]):
-            indent = ' '*(5 - len(str(card_index)))
+        for card_index, displayed_card in zip(range(len(self.hand)), [str(card) for card in self.hand]):
+            indent = ' ' * (5 - len(str(card_index)))
             print(card_index, indent + displayed_card)
 
     def play_random(self):
@@ -126,6 +130,7 @@ class Player(object):
         Play a random card from hand.
         """
         return self.play(random.randrange(len(self.hand)))
+
 
 ######################
 # Optional Questions #
@@ -151,14 +156,15 @@ class TutorCard(Card):
         True
         """
         "*** YOUR CODE HERE ***"
-        #Uncomment the line below when you've finished implementing this method!
-        #print('{} discarded and re-drew 3 cards!'.format(opponent.name))
+        # Uncomment the line below when you've finished implementing this method!
+        # print('{} discarded and re-drew 3 cards!'.format(opponent.name))
 
     def copy(self):
         """
         Create a copy of this card.
         """
         return TutorCard(self.name, self.attack, self.defense)
+
 
 class TACard(Card):
     cardtype = 'TA'
@@ -178,12 +184,12 @@ class TACard(Card):
         """
         "*** YOUR CODE HERE ***"
 
-
     def copy(self):
         """
         Create a copy of this card.
         """
         return TACard(self.name, self.attack, self.defense)
+
 
 class ProfessorCard(Card):
     cardtype = 'Professor'
@@ -210,8 +216,8 @@ class ProfessorCard(Card):
         "*** YOUR CODE HERE ***"
         discarded = orig_opponent_deck_length - len(opponent.deck.cards)
         if discarded:
-            #Uncomment the line below when you've finished implementing this method!
-            #print('{} cards were discarded from {}\'s deck!'.format(discarded, opponent.name))
+            # Uncomment the line below when you've finished implementing this method!
+            # print('{} cards were discarded from {}\'s deck!'.format(discarded, opponent.name))
             return
 
     def copy(self):
@@ -249,8 +255,8 @@ class Deck(object):
         """
         return Deck([card.copy() for card in self.cards])
 
-class Game(object):
 
+class Game(object):
     win_score = 8
 
     def __init__(self, player1, player2):
@@ -285,7 +291,6 @@ class Game(object):
         print('You {} this round!'.format(result))
         print('{}\'s card: {}; Power: {}'.format(self.player1.name, p1_card, p1_power))
         print('Opponent\'s card: {}; Power: {}'.format(p2_card, p2_power))
-
 
     def game_won(self):
         """
