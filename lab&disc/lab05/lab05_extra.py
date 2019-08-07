@@ -2,6 +2,7 @@
 
 from lab05 import *
 
+
 # Shakespeare and Dictionaries
 def build_successors_table(tokens):
     """Return a dictionary: keys are words; values are lists of successors.
@@ -22,9 +23,12 @@ def build_successors_table(tokens):
     for word in tokens:
         if prev not in table:
             "*** YOUR CODE HERE ***"
+            table[prev] = []
         "*** YOUR CODE HERE ***"
+        table[prev].append(word)
         prev = word
     return table
+
 
 def construct_sent(word, table):
     """Prints a random sentence starting with word, sampling from
@@ -40,7 +44,11 @@ def construct_sent(word, table):
     result = ''
     while word not in ['.', '!', '?']:
         "*** YOUR CODE HERE ***"
+        result += word + " "
+        lst = table[word]
+        word = lst[random.randint(0, len(lst) - 1)]
     return result.strip() + word
+
 
 def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com/shakespeare.txt'):
     """Return the words of Shakespeare's plays as a list."""
@@ -52,13 +60,90 @@ def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com
         shakespeare = urlopen(url)
         return shakespeare.read().decode(encoding='ascii').split()
 
+
 # Uncomment the following two lines
-# tokens = shakespeare_tokens()
-# table = build_successors_table(tokens)
+tokens = shakespeare_tokens()
+table = build_successors_table(tokens)
+
 
 def random_sent():
     import random
     return construct_sent(random.choice(table['.']), table)
+
+
+#########
+# Trees #
+#########
+
+def tree(label, branches=[]):
+    """Construct a tree with the given label value and a list of branches."""
+    for branch in branches:
+        assert is_tree(branch), 'branches must be trees'
+    return [label] + list(branches)
+
+
+def label(tree):
+    """Return the label value of a tree."""
+    return tree[0]
+
+
+def branches(tree):
+    """Return the list of branches of the given tree."""
+    return tree[1:]
+
+
+def is_tree(tree):
+    """Returns True if the given tree is a tree, and False otherwise."""
+    if type(tree) != list or len(tree) < 1:
+        return False
+    for branch in branches(tree):
+        if not is_tree(branch):
+            return False
+    return True
+
+
+def is_leaf(tree):
+    """Returns True if the given tree's list of branches is empty, and False
+    otherwise.
+    """
+    return not branches(tree)
+
+
+def print_tree(t, indent=0):
+    """Print a representation of this tree in which each node is
+    indented by two spaces times its depth from the root.
+
+    >>> print_tree(tree(1))
+    1
+    >>> print_tree(tree(1, [tree(2)]))
+    1
+      2
+    >>> numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+    >>> print_tree(numbers)
+    1
+      2
+      3
+        4
+        5
+      6
+        7
+    """
+    print('  ' * indent + str(label(t)))
+    for b in branches(t):
+        print_tree(b, indent + 1)
+
+
+def copy_tree(t):
+    """Returns a copy of t. Only for testing purposes.
+
+    >>> t = tree(5)
+    >>> copy = copy_tree(t)
+    >>> t = tree(6)
+    >>> print_tree(copy)
+    5
+    """
+    return tree(label(t), [copy_tree(b) for b in branches(t)])
+
 
 # Q6
 def sprout_leaves(t, vals):
@@ -95,6 +180,18 @@ def sprout_leaves(t, vals):
           2
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return tree(label(t), [tree(v) for v in vals])
+
+    return tree(label(t), [sprout_leaves(b, vals) for b in branches(t)])
+
+
+# t1 = tree(1, [tree(2), tree(3)])
+# print_tree(t1)
+
+
+# new1 = sprout_leaves(t1, [4, 5])
+# print_tree(new1)
 
 # Q7
 def add_trees(t1, t2):
@@ -133,3 +230,4 @@ def add_trees(t1, t2):
       5
     """
     "*** YOUR CODE HERE ***"
+
