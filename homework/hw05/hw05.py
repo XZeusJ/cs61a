@@ -669,9 +669,10 @@ def quadratic(x, a, b, c):
     """
     "*** YOUR CODE HERE ***"
     f = lambda t: a * (t ** 2) + b * t + c
-    extreme_point = -b / (2*a)
+    extreme_point = -b / (2 * a)
     if lower_bound(x) <= extreme_point <= upper_bound(x):
         extrema = [f(lower_bound(x)), f(upper_bound(x)), f(extreme_point)]
     else:
         extrema = [f(lower_bound(x)), f(upper_bound(x))]
     return interval(min(extrema), max(extrema))
+

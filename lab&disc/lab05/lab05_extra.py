@@ -230,4 +230,18 @@ def add_trees(t1, t2):
       5
     """
     "*** YOUR CODE HERE ***"
+    len1, len2 = len(branches(t1)), len(branches(t2))
+    if len1 == len2:
+        return tree(label(t1) + label(t2), [add_trees(b1, b2) for b1, b2 in zip(branches(t1), branches(t2))])
+    elif len1 < len2:
+        new_branches_t1 = branches(t1) + [tree(0) for _ in range(len2 - len1)]
+        new_t1 = tree(label(t1), new_branches_t1)
+        return add_trees(new_t1, t2)
+    else:
+        return add_trees(t2, t1)
 
+
+a = tree(2, [tree(3, [tree(4), tree(5)])])
+b = tree(2, [tree(3, [tree(4)]), tree(5)])
+print(a)
+print(b)
