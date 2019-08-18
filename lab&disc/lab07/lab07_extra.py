@@ -2,8 +2,9 @@
 
 from lab07 import *
 
+
 # Q9
-def remove_all(link , value):
+def remove_all(link, value):
     """Remove all the nodes containing value. Assume there exists some
     nodes to be removed and the first element is never removed.
 
@@ -18,6 +19,15 @@ def remove_all(link , value):
     <0 1>
     """
     "*** YOUR CODE HERE ***"
+    prev = link
+    curr = link.rest
+    while curr != Link.empty:
+        if curr.first != value:
+            prev = prev.rest
+        else:
+            prev.rest = curr.rest
+        curr = curr.rest
+
 
 # Q10
 def deep_map_mut(fn, link):
@@ -33,6 +43,13 @@ def deep_map_mut(fn, link):
     <9 <16> 25 36>
     """
     "*** YOUR CODE HERE ***"
+    while link != Link.empty:
+        if type(link.first) == int:
+            link.first = fn(link.first)
+        else:
+            deep_map_mut(fn, link.first)
+        link = link.rest
+
 
 # Q11
 def has_cycle(link):
@@ -50,6 +67,13 @@ def has_cycle(link):
     False
     """
     "*** YOUR CODE HERE ***"
+    first = link
+    while link != Link.empty:
+        link = link.rest
+        if link == first:
+            return True
+    return False
+
 
 def has_cycle_constant(link):
     """Return whether link contains a cycle.
@@ -63,6 +87,13 @@ def has_cycle_constant(link):
     False
     """
     "*** YOUR CODE HERE ***"
+    first = link
+    while link != Link.empty:
+        link = link.rest
+        if link == first:
+            return True
+    return False
+
 
 # Q12
 def reverse_other(t):
@@ -79,3 +110,12 @@ def reverse_other(t):
     Tree(1, [Tree(8, [Tree(3, [Tree(5), Tree(4)]), Tree(6, [Tree(7)])]), Tree(2)])
     """
     "*** YOUR CODE HERE ***"
+
+    def reverse_helper(t, need_reverse):
+        reverse_labels = [b.label for b in t.branches][::-1]
+        for i in range(len(t.branches)):
+            reverse_helper(t.branches[i], not need_reverse)
+            if need_reverse:
+                t.branches[i].label = reverse_labels[i]
+
+    reverse_helper(t, True)

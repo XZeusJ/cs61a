@@ -32,8 +32,8 @@ def store_digits(n):
     "*** YOUR CODE HERE ***"
     result = Link.empty
     while n > 0:
-        n //= 10
         result = Link(n % 10, result)
+        n //= 10
     return result
 
 
@@ -84,6 +84,38 @@ def is_bst(t):
     """
     "*** YOUR CODE HERE ***"
 
+    # if t.is_leaf():
+    #     return True
+    #
+    # if len(t.branches) == 2 and (t.branches[0].label > t.label or t.branches[1].label < t.label):
+    #     return False
+    #
+    # return all([is_bst(b) for b in t.branches])
+
+    def bst_max(t):
+        if t.is_leaf():
+            return t.label
+        return max(t.label, bst_max(t.branches[-1]))
+
+    def bst_min(t):
+        if t.is_leaf():
+            return t.label
+        return min(t.label, bst_min(t.branches[0]))
+
+    if t.is_leaf():
+        return True
+    # Each node has at most two children (a leaf is automatically a valid binary search tree)
+    # The children are valid binary search trees
+    if len(t.branches) == 1:
+        # For every node, the entries in that node's left child are less than or equal to the label of the node
+        return is_bst(t.branches[0]) and (t.label >= bst_min(t.branches[0]) or t.label < bst_max(t.branches[0]))
+    if len(t.branches) == 2:
+        # For every node, the entries in that node's right child are greater than the label of the node
+        return is_bst(t.branches[0]) and is_bst(t.branches[1]) and bst_max(t.branches[0]) <= t.label and bst_min(
+            t.branches[1]) > t.label
+    else:
+        return False
+
 
 # Q8
 
@@ -100,12 +132,16 @@ def in_order_traversal(t):
 
     We have the in-order-traversal 4, 2, 6, 5, 7, 1, 3
 
-    >>> t = Tree(1, [Tree(2, [Tree(4), Tree(5, [Tree(6), Tree(7)])]), Tree(3)])
-    >>> list(in_order_traversal(t))
+    # >>> t = Tree(1, [Tree(2, [Tree(4), Tree(5, [Tree(6), Tree(7)])]), Tree(3)])
+    # >>> list(in_order_traversal(t))
     [4, 2, 6, 5, 7, 1, 3]
     """
     "*** YOUR CODE HERE ***"
-
+    if t.is_leaf():
+        yield t.label
+    yield from in_order_traversal(t.branches[0])
+    yield t.label
+    yield from in_order_traversal(t.branches[1])
 
 # Linked List Class
 class Link:
