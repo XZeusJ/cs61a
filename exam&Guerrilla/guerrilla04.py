@@ -208,46 +208,124 @@ p.height
 p.leaf.sugars_used
 
 
-# 9b
-class Plant:
-    def __init__(self):
-        self.materials = []
-        self.height = 1
-        self.leaf = [Leaf(self)]
-        self.age = 0
+# Linked List Class
+class Link:
+    """A linked list.
 
-    def abosrb(self):
-        for l in self.leaf:
-            l.absorb()
-            l.age += 1
+    s = Link(1)
+    s.first
+    1
+    s.rest is Link.empty
+    True
+    s = Link(2, Link(3, Link(4)))
+    s.second
+    3
+    s.first = 5
+    s.second = 6
+    s.rest.rest = Link.empty
+    s                                    # Displays the contents of repr(s)
+    Link(5, Link(6))
+    s.rest = Link(7, Link(Link(8, Link(9))))
+    s
+    Link(5, Link(7, Link(Link(8, Link(9)))))
+    print(s)                             # Prints str(s)
+    <5 7 <8 9>>
+    """
+    empty = ()
 
-        self.age += 1
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
 
+    @property
+    def second(self):
+        return self.rest.first
 
-    def grow(self):
-        for sugar in self.materials:
-            sugar.activate()
-            self.height += 1
-
-        for l in self.leaf:
-            l.age += 2
-        self.age += 2
-
-    def death(self):
-
-
-class Leaf:
-    def __init__(self, plant):
-        self.alive = True
-        self.sugars_used = 0
-        self.plant = plant
-
-
-    def absorb(self):
-        if self.alive:
-            self.plant.materials.append(Sugar(self, self.plant))
-
-    def death(self):
+    @second.setter
+    def second(self, value):
+        self.rest.first = value
 
     def __repr__(self):
-        return '|Leaf|'
+        if self.rest is not Link.empty:
+            rest_repr = ', ' + repr(self.rest)
+        else:
+            rest_repr = ''
+        return 'Link(' + repr(self.first) + rest_repr + ')'
+
+    def __str__(self):
+        string = '<'
+        while self.rest is not Link.empty:
+            string += str(self.first) + ' '
+            self = self.rest
+        return string + str(self.first) + '>'
+
+
+# Q1:
+def has_cycle(link):
+    first = link
+    while link != Link.empty:
+        link = link.rest
+        if link == first:
+            return True
+    return False
+
+
+def seq_in_link(link, sub_link):
+    if sub_link is Link.empty:
+        return True
+    if link is Link.empty:
+        return False
+    if link.first == sub_link.first:
+        return seq_in_link(link.rest, sub_link.rest)
+    else:
+        return seq_in_link(link.rest, sub_link)
+
+
+def g(n):
+    while n > 0:
+        if n % 2 == 0:
+            yield n
+        else:
+            print('odd')
+        n -= 1
+
+
+t = g(4)
+t
+next(t)
+# n
+t = g(next(t) + 5)
+next(t)
+
+
+def gen_inf(lst):
+    i = 0
+    while True:
+        yield lst[i % len(lst)]
+        i += 1
+
+
+def nested_gen(lst):
+    for elem in lst:
+        try:
+            iter(elem)
+            yield from nested_gen(elem)
+        except TypeError:
+            yield elem
+
+
+def mutated_gen(lst):
+    original = list(lst)
+
+    def generator_maker(original, lst):
+        curr = 0
+        while curr < len(original):
+            if len(original) != len(lst):
+                break
+            else:
+                if original[curr] != lst[curr]:
+                    yield lst[curr]
+                curr += 1
+
+    return generator_maker(original, lst)
