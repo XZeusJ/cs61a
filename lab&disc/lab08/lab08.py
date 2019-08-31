@@ -92,19 +92,34 @@ def insert_into_all(item, nested_list):
     [[0], [0, 1, 2], [0, 3]]
     """
     "*** YOUR CODE HERE ***"
+    new_list = nested_list.copy();
+    for list in new_list:
+        list.insert(item, 0)
+    return nested_list
 
 
 def subseqs(s):
     """Assuming that S is a list, return a nested list of all subsequences
-    of S (a list of lists). The subsequences can appear in any order.
+        of S (a list of lists). The subsequences can appear in any order.
 
-    >>> seqs = subseqs([1, 2, 3])
-    >>> sorted(seqs)
-    [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
-    >>> subseqs([])
-    [[]]
-    """
+        >>> seqs = subseqs([1, 2, 3])
+        >>> sorted(seqs)
+        [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
+        >>> subseqs([])
+        [[]]
+        """
     "*** YOUR CODE HERE ***"
+
+    def help(s, lists=[]):
+        if len(s) == 0:
+            return [[]]
+
+        lists.append([s[0]])
+        for l in lists:
+            lists += [l + [s[0]]]
+        return lists + help(s[1:], lists)
+
+    return help(s)
 
 
 def inc_subseqs(s):
@@ -112,24 +127,24 @@ def inc_subseqs(s):
     of S (a list of lists) for which the elements of the subsequence
     are strictly nondecreasing. The subsequences can appear in any order.
 
-    >>> seqs = inc_subseqs([1, 3, 2])
-    >>> sorted(seqs)
+    # >>> seqs = inc_subseqs([1, 3, 2])
+    # >>> sorted(seqs)
     [[], [1], [1, 2], [1, 3], [2], [3]]
-    >>> inc_subseqs([])
+    # >>> inc_subseqs([])
     [[]]
-    >>> seqs2 = inc_subseqs([1, 1, 2])
-    >>> sorted(seqs2)
+    # >>> seqs2 = inc_subseqs([1, 1, 2])
+    # >>> sorted(seqs2)
     [[], [1], [1], [1, 1], [1, 1, 2], [1, 2], [1, 2], [2]]
     """
 
     def subseq_helper(s, prev):
         if not s:
-            return ____________________
+            return [[]]
         elif s[0] < prev:
-            return ____________________
+            return subseq_helper(s[1:], prev)
         else:
-            a = ______________________
-            b = ______________________
-            return insert_into_all(________, ______________) + ________________
+            a = subseq_helper(s[1:], s[0])
+            b = subseq_helper(s[1:], prev)
+            return insert_into_all(s[0], a) + b
 
-    return subseq_helper(____, ____)
+    return subseq_helper(s, 0)
