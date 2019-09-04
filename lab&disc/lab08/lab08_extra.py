@@ -2,6 +2,7 @@
 
 from lab08 import *
 
+
 # OOP
 class Keyboard:
     """A Keyboard takes in an arbitrary amount of buttons, and has a
@@ -28,22 +29,32 @@ class Keyboard:
 
     def __init__(self, *args):
         "*** YOUR CODE HERE ***"
+        self.buttons = {}
+        for but in args:
+            self.buttons[but.pos] = but
 
     def press(self, info):
         """Takes in a position of the button pressed, and
         returns that button's output"""
         "*** YOUR CODE HERE ***"
+        if info >= len(self.buttons):
+            return ''
+        self.buttons[info].times_pressed += 1
+        return self.buttons[info].key
 
     def typing(self, typing_input):
         """Takes in a list of positions of buttons pressed, and
         returns the total output"""
         "*** YOUR CODE HERE ***"
+        return ''.join(self.press(i) for i in typing_input)
+
 
 class Button:
     def __init__(self, pos, key):
         self.pos = pos
         self.key = key
         self.times_pressed = 0
+
 
 # Nonlocal
 def make_advanced_counter_maker():
@@ -76,6 +87,29 @@ def make_advanced_counter_maker():
     1
     """
     "*** YOUR CODE HERE ***"
+    g_count = 0  # a shared count for all counters
+
+    def make_advanced_counter():
+        count = 0  # a personal count
+
+        def make_counter(s):
+            nonlocal count
+            nonlocal g_count
+            if s == 'count':
+                count += 1
+                return count
+            elif s == 'global-count':
+                g_count += 1
+                return g_count
+            elif s == 'reset':
+                count = 0
+            elif s == 'global-reset':
+                g_count = 0
+
+        return make_counter
+
+    return make_advanced_counter
+
 
 # Lists
 def trade(first, second):
@@ -106,14 +140,21 @@ def trade(first, second):
     [4, 3, 1, 4, 1]
     """
     m, n = 1, 1
-
     "*** YOUR CODE HERE ***"
+    while m <= len(first) and n <= len(second):
+        if sum(first[:m]) == sum(second[:n]):
+            break
+        elif sum(first[:m]) < sum(second[:n]):
+            m += 1
+        else:
+            n += 1
 
-    if False: # change this line!
+    if sum(first[:m]) == sum(second[:n]):  # change this line!
         first[:m], second[:n] = second[:n], first[:m]
         return 'Deal!'
     else:
         return 'No deal!'
+
 
 # Generators
 
@@ -139,12 +180,13 @@ def permutations(seq):
     >>> sorted(permutations("ab"))
     [['a', 'b'], ['b', 'a']]
     """
-    if ____________________:
-        yield ____________________
+    if len(seq) == 0:
+        yield
     else:
-        for perm in _____________________:
-            for _____ in ________________:
-                _________________________
+        for perm in seq:
+            for  in :
+
+
 
 # Recursive objects
 def make_to_string(front, mid, back, empty_repr):
@@ -163,6 +205,7 @@ def make_to_string(front, mid, back, empty_repr):
     '()'
     """
     "*** YOUR CODE HERE ***"
+
 
 def tree_map(fn, t):
     """Maps the function fn over the entries of t and returns the
@@ -197,6 +240,7 @@ def tree_map(fn, t):
     """
     "*** YOUR CODE HERE ***"
 
+
 def long_paths(tree, n):
     """Return a list of all paths in tree with length at least n.
 
@@ -228,6 +272,7 @@ def long_paths(tree, n):
     """
     "*** YOUR CODE HERE ***"
 
+
 # Orders of Growth
 def zap(n):
     i, count = 1, 0
@@ -238,16 +283,18 @@ def zap(n):
             i *= 3
     return count
 
+
 def boom(n):
     sum = 0
     a, b = 1, 1
-    while a <= n*n:
-        while b <= n*n:
-            sum += (a*b)
+    while a <= n * n:
+        while b <= n * n:
+            sum += (a * b)
             b += 1
         b = 0
         a += 1
     return sum
+
 
 # Tree class
 class Tree:
@@ -260,6 +307,7 @@ class Tree:
     >>> t.branches[1].is_leaf()
     True
     """
+
     def __init__(self, label, branches=[]):
         for b in branches:
             assert isinstance(b, Tree)
@@ -322,4 +370,5 @@ class Tree:
             for b in t.branches:
                 tree_str += print_tree(b, indent + 1)
             return tree_str
+
         return print_tree(self).rstrip()
