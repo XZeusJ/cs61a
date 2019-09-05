@@ -3,6 +3,9 @@
 ; Q3
 (define (over-or-under x y)
   'YOUR-CODE-HERE
+  (cond ((< x y) -1)
+        ((> x y) 1)
+        (else 0))
 )
 
 ;;; Tests
@@ -16,6 +19,10 @@
 ; Q4
 (define (filter f lst)
   'YOUR-CODE-HERE
+  (if ((f (car lst))
+      (filter f (cdr lst))
+      (filter f))
+
 )
 
 ;;; Tests
