@@ -180,11 +180,13 @@ def permutations(seq):
     >>> sorted(permutations("ab"))
     [['a', 'b'], ['b', 'a']]
     """
-    if len(seq) == 0:
-        yield
+    if not seq:
+        yield []
     else:
-        for perm in seq:
-            for  in :
+        for perm in permutations(seq[1:]):
+            for i in range(len(perm) + 1):
+                yield perm[:i] + [seq[0]] + perm[i:] # don't know how to get this result..
+
 
 
 
@@ -205,6 +207,14 @@ def make_to_string(front, mid, back, empty_repr):
     '()'
     """
     "*** YOUR CODE HERE ***"
+    def to_string(lst):
+        if lst == Link.empty:
+            return empty_repr
+        else:
+            return front + str(lst.first) + mid + to_string(lst.rest) + back
+
+
+    return to_string
 
 
 def tree_map(fn, t):
@@ -239,6 +249,11 @@ def tree_map(fn, t):
         8
     """
     "*** YOUR CODE HERE ***"
+    if t.is_leaf():
+        return Tree(fn(t.label))
+    else:
+        stems = [tree_map(fn,b) for b in t.branches]
+        return Tree(fn(t.label), stems)
 
 
 def long_paths(tree, n):
@@ -271,6 +286,13 @@ def long_paths(tree, n):
     [Link(0, Link(11, Link(12, Link(13, Link(14)))))]
     """
     "*** YOUR CODE HERE ***"
+    paths = []
+    if n <= 0 and not tree.branches:
+        paths.append(Link(tree.label))
+    for b in tree.branches:
+        for path in long_paths(b, n-1):
+            paths.append(Link(tree.label, path))
+    return paths
 
 
 # Orders of Growth
@@ -282,7 +304,7 @@ def zap(n):
             print(i / 6)
             i *= 3
     return count
-
+# O(n)
 
 def boom(n):
     sum = 0
@@ -294,7 +316,7 @@ def boom(n):
         b = 0
         a += 1
     return sum
-
+# O(n**4)
 
 # Tree class
 class Tree:
