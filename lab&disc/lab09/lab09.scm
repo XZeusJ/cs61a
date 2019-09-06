@@ -19,10 +19,9 @@
 ; Q4
 (define (filter f lst)
   'YOUR-CODE-HERE
-  (if ((f (car lst))
-      (filter f (cdr lst))
-      (filter f))
-
+  (cond ((null? lst) nil)
+        ((f (car lst)) (cons (car lst) (filter f (cdr lst))))
+        (else (filter f (cdr lst))))
 )
 
 ;;; Tests
@@ -34,6 +33,8 @@
 ; Q5
 (define (make-adder num)
   'YOUR-CODE-HERE
+  (define (adder i) (+ i num))
+  adder
 )
 
 ;;; Tests
