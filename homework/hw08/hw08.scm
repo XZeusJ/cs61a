@@ -3,10 +3,34 @@
     nil
     (append (reverse (cdr lst)) (list (car lst))))
 )
+
+; helper function
+; returns the values of lst that are bigger than x
+; e.g., (larger-values 3 '(1 2 3 4 5 1 2 3 4 5)) --> (4 5 4 5)
+(define (larger-values x lst)
+  (filter (lambda (i) (< x i)) lst))
+
 (define (longest-increasing-subsequence lst)
   (if (null? lst)
-    lst
-    (cons (car lst) (longest-increasing-subsequence )))
+    nil
+;    (cons (car lst)
+;      (longest-increasing-subsequence
+;        (filter
+;          (lambda (x) (< (car lst) x))
+;          (cdr lst))))
+    (begin
+      (define first (car lst))
+      (define rest (cdr lst))
+      (define large-values-rest
+        (larger-values first rest))
+      (define with-first
+        (cons (car lst) (longest-increasing-subsequence (cdr lst))))
+      (define without-first
+        (longest-increasing-subsequence (cdr lst)))
+      (if (< (length large-values-rest) (length without-first))
+         with-first
+         without-first))
+  )
 )
 
 (define (cadr s) (car (cdr s)))
