@@ -79,7 +79,10 @@
 (define (multiplicand p) (caddr p))
 
 (define (derive-sum expr var)
-    'YOUR-CODE-HERE
+;  (cond ((pair? (addend expr)) (derive-sum (addend expr) var))
+;    ((pair? (augend expr)) (derive-sum (augend expr) var))
+;    (else (+ (derive (addend expr) var) (derive (augend expr) var))))
+  (make-sum (derive (addend expr) var) (derive (augend expr) var))
 )
 
 (define (derive-product expr var)
