@@ -86,12 +86,15 @@
 )
 
 (define (derive-product expr var)
-    'YOUR-CODE-HERE
+  (make-sum (make-product (derive (multiplier expr) var) (multiplicand expr))
+            (make-product (derive (multiplicand expr) var) (multiplier expr)))
 )
 
 ; Exponentiations are represented as lists that start with ^.
 (define (make-exp base exponent)
-    'YOUR-CODE-HERE
+  (cond ((= exponent 0) 1)
+    ((= exponent 1) base)
+    ((=number? base) (make-exp )))
 )
 
 (define (base exp)
