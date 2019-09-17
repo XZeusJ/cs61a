@@ -116,5 +116,10 @@
 (define x^3 (make-exp 'x 3))
 
 (define (derive-exp exp var)
-    
+  (let ((b (base exp))
+         (n (exponent exp)))
+    (if (number? n)
+      (let ((first (make-product n (make-exp b (- n 1)))))
+        (make-product first (derive b var)))  ; suit for Chain rule
+      'unknown))
 )
