@@ -37,8 +37,8 @@ class Expr:
         evaluated.  This method should return a `Value` instance, the result of
         evaluating the expression.
         """
-        # raise NotImplementedError
-        return env[self.args]
+        raise NotImplementedError
+        # return env[self.args]
 
     def __str__(self):
         """
