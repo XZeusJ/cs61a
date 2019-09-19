@@ -37,7 +37,8 @@ class Expr:
         evaluated.  This method should return a `Value` instance, the result of
         evaluating the expression.
         """
-        raise NotImplementedError
+        # raise NotImplementedError
+        return env[self.args]
 
     def __str__(self):
         """
@@ -110,6 +111,10 @@ class Name(Expr):
         Exception raised!
         """
         "*** YOUR CODE HERE ***"
+        if self.string in env:
+            return env[self.string]
+        else:
+            raise NameError("name '{}' is not defined".format(self.string))
 
     def __str__(self):
         return self.string
